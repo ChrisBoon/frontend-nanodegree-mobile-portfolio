@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                 map: true,
                 processors: [
                     require('autoprefixer')({browsers: ['last 3 versions']}), // add/remove browser prefixes
-                    require('css-mqpacker')(), //combine identical media queries
+                    require('css-mqpacker')({autoprefixer: false, zindex: false}), // combine identical media queries (skipping autoprefixer as included above for addition as well as removal, skipping zindex in case JS relies on z-index values)
                     require('cssnano')() //minify and other optimizations
                 ]
             },
