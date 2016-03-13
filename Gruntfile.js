@@ -16,8 +16,6 @@ module.exports = function(grunt) {
         },
 
         //--Styling--//
-        //TODO: refactor sass and postcss to account for all css files
-        //TODO: add css minification step
 
         ////output converted scss as css to build folder:
         sass: {
@@ -25,22 +23,27 @@ module.exports = function(grunt) {
                 options: {
                     style: 'expanded'
                 },
-                files: {
-                    'build/css/style.css': 'app/sass/style.scss',
-                    'build/css/print.css': 'app/sass/print.scss'
-                }
+                files: [{
+                    expand: true,
+                    cwd: 'app/',
+                    src: ['**/*.scss'],
+                    dest: 'build/',
+                    ext: '.css'
+                }]
             }
         },
-        ////add required vendor prefixes to css in build folder:
+        ////css optimizations:
         postcss: {
             options: {
                 map: true,
                 processors: [
-                    require('autoprefixer')({browsers: ['last 3 versions']})
+                    require('autoprefixer')({browsers: ['last 3 versions']}), // add/remove browser prefixes
+                    require('css-mqpacker')(), //combine identical media queries
+                    require('cssnano')() //minify and other optimizations
                 ]
             },
             dist: {
-                src: 'build/css/*.css'
+                src: 'build/**/*.css'
             }
         },
 
