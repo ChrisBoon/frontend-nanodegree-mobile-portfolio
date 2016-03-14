@@ -4,8 +4,6 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        //TODO: Include pagespeed (and nGrok?) for automating testing.
-
         //--Javascript--//
 
         ////run jsHint for code quality check:
@@ -13,7 +11,6 @@ module.exports = function(grunt) {
               myFiles: ['app/**/*.js']
         },
 
-        //--Styling--//
         uglify: {
             dist: {
                 options: {
@@ -27,6 +24,9 @@ module.exports = function(grunt) {
                 }]
             }
         },
+
+        //--Styling--//
+
         ////output converted scss as css to build folder:
         sass: {
             dist: {
@@ -100,8 +100,7 @@ module.exports = function(grunt) {
         },
 
         //--Watch--//
-        //TODO: Add more watch tasks
-        //TODO: Refactor existing watch tasks to make sure all files are covered
+        //TODO: Add more watch tasks - images?
         watch: {
             scripts: {
                 files: ['app/**/*.js'],
