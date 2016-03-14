@@ -7,16 +7,26 @@ module.exports = function(grunt) {
         //TODO: Include pagespeed (and nGrok?) for automating testing.
 
         //--Javascript--//
-        //TODO: output minified JS to build folder
-        //TODO: refactor to check all js files
 
         ////run jsHint for code quality check:
         jshint: {
-              myFiles: ['app/js/perfmatters.js']
+              myFiles: ['app/**/*.js']
         },
 
         //--Styling--//
-
+        uglify: {
+            dist: {
+                options: {
+                    sourceMap: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'app/',
+                    src: ['**/*.js'],
+                    dest: 'build/'
+                }]
+            }
+        },
         ////output converted scss as css to build folder:
         sass: {
             dist: {
@@ -94,15 +104,15 @@ module.exports = function(grunt) {
         //TODO: Refactor existing watch tasks to make sure all files are covered
         watch: {
             scripts: {
-                files: ['app/js/perfmatters.js'],
-                tasks: ['jshint'],
+                files: ['app/**/*.js'],
+                tasks: ['jshint', 'uglify'],
                 options: {
                     spawn: false,
                     livereload: true
                 },
             },
             css: {
-                files: ['app/sass/*.scss'],
+                files: ['app/**/*.scss'],
                 tasks: ['sass','postcss'],
                 options: {
                     spawn: false,
@@ -110,7 +120,7 @@ module.exports = function(grunt) {
                 }
             },
             html: {
-                files: ['app/index.html'],
+                files: ['app/**/*.html'],
                 tasks: ['htmlmin'],
                 options: {
                     spawn: false,
@@ -129,15 +139,17 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-htmlmin')
     grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     grunt.registerTask('default', [
         'jshint',
+        'uglify',
         'sass',
         'postcss',
-        'imagemin',
         'htmlmin',
-        'connect:build'
+        'imagemin',
+        'connect:build',
     ]);
 
 };
