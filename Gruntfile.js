@@ -100,7 +100,6 @@ module.exports = function(grunt) {
         },
 
         //--Watch--//
-        //TODO: Add more watch tasks - images?
         watch: {
             scripts: {
                 files: ['app/**/*.js'],
@@ -126,6 +125,15 @@ module.exports = function(grunt) {
                     livereload: true
                 }
             }
+        },
+
+
+        //--Clean--//
+        ////tasks for removing css and images before rebuilding - simple way to make sure files deleted from 'app' also get removed from 'build'.
+        ////for now only covers images and css but may expand to cover more in future
+        clean: {
+            images: ['build/**/*.{png,jpg,gif}'],
+            css: ['build/**/*.css']
         }
 
     });
@@ -139,9 +147,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin')
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     grunt.registerTask('default', [
+        'clean:images',
+        'clean:css',
         'jshint',
         'uglify',
         'sass',
