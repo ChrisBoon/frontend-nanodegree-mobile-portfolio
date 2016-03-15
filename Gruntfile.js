@@ -130,10 +130,10 @@ module.exports = function(grunt) {
 
         //--Clean--//
         ////tasks for removing css and images before rebuilding - simple way to make sure files deleted from 'app' also get removed from 'build'.
-        ////for now only covers images and css but may expand to cover more in future
+        ////for now only covers images and css (and maps) but may expand to cover more in future
         clean: {
             images: ['build/**/*.{png,jpg,gif}'],
-            css: ['build/**/*.css']
+            css: ['build/**/*.{css,css.map}']
         }
 
     });
