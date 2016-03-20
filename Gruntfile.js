@@ -119,7 +119,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['app/**/*.html'],
-                tasks: ['htmlmin'],
+                tasks: ['htmlmin','critical'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -136,7 +136,8 @@ module.exports = function(grunt) {
             css: ['build/**/*.{css,css.map}']
         },
 
-
+        //--Critical--//
+        ////Running this on the build file to inline critical css
         critical: {
             dist: {
                 options: {
@@ -174,6 +175,7 @@ module.exports = function(grunt) {
         'sass',
         'postcss',
         'htmlmin',
+        'critical',
         'imagemin',
         'connect:build',
     ]);
