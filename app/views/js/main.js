@@ -502,7 +502,7 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
+  var items = movingPizzaDomElems;
   var newScrollTop = document.body.scrollTop;
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((newScrollTop / 1250) + (i % 5));
@@ -523,14 +523,21 @@ function updatePositions() {
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
+// Value to space the moving pizza by.
+// Used in createMovablePizza() function to set the space between pizas and define number of rows and columns.
+var MOVINGPIZZASPACE = 256;
+
+// Variable to store reference to the pizzas created by createMovablePizza()
+// Used in updatePositions() function to access the pizzas.
+var movingPizzaDomElems;
+
 // Generates the sliding pizzas when the page loads.
 // optimized to only create as many pizzas as will be viewable in the viewport
   // s: approx size gap in px between each pizza
   // cols: gets the viewport height and figures out how many columns of pizzas are needed to fill the screen
   // rows: gets the viewport width and figures out how many rows of pizzas are needed to fill the screen
   // pizzaCount: times cols by rows to get number of pizzas to include
-document.addEventListener('DOMContentLoaded', function() {
-  var s = 256;
+function createMovablePizza(s) {
   var cols = Math.ceil(window.innerWidth / s);
   var rows = Math.ceil(window.innerHeight / s);
   var pizzaCount = cols * rows;
@@ -545,5 +552,10 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
+  movingPizzaDomElems = document.querySelectorAll('.mover');
   updatePositions();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  createMovablePizza(MOVINGPIZZASPACE);
 });
