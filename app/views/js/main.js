@@ -507,7 +507,7 @@ function updatePositions() {
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((newScrollTop / 1250) + (i % 5));
     var moveMe = items[i].basicLeft + 100 * phase ;
-    items[i].style.transform = 'translateX('+ moveMe + 'px)';
+    items[i].style.transform = 'translate3D('+ moveMe + 'px ,0,0)';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
