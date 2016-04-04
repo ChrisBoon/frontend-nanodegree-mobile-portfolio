@@ -521,7 +521,11 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', function(){
+  window.requestAnimationFrame(updatePositions);
+});
+
+
 
 // Value to space the moving pizza by.
 // Used in createMovablePizza() function to set the space between pizas and define number of rows and columns.
