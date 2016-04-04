@@ -523,10 +523,17 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
+// optimized to only create as many pizzas as will be viewable in the viewport
+  // s: approx size gap in px between each pizza
+  // cols: gets the viewport height and figures out how many columns of pizzas are needed to fill the screen
+  // rows: gets the viewport width and figures out how many rows of pizzas are needed to fill the screen
+  // pizzaCount: times cols by rows to get number of pizzas to include
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  var cols = Math.ceil(window.innerWidth / s);
+  var rows = Math.ceil(window.innerHeight / s);
+  var pizzaCount = cols * rows;
+  for (var i = 0; i < pizzaCount; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
