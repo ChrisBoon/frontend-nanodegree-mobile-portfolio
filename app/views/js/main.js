@@ -563,3 +563,24 @@ function createMovablePizza(s) {
 document.addEventListener('DOMContentLoaded', function() {
   createMovablePizza(MOVINGPIZZASPACE);
 });
+
+
+//set a variable for referencing setTimeout in the 'resize' event
+var resizeTimer;
+
+//Removes the current moving pizzas and redraws a new set to fill out the new screen dimensions
+window.addEventListener('resize', function() {
+
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() {
+
+  var myNode = document.getElementById("movingPizzas1");
+  while (myNode.firstChild) {
+      myNode.removeChild(myNode.firstChild);
+  }
+
+  createMovablePizza(MOVINGPIZZASPACE);
+
+  }, 100);
+
+});
