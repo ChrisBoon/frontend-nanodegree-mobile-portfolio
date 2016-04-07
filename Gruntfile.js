@@ -119,7 +119,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: ['app/**/*.html'],
-                tasks: ['htmlmin'],
+                tasks: ['htmlmin','critical'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -134,6 +134,22 @@ module.exports = function(grunt) {
         clean: {
             images: ['build/**/*.{png,jpg,gif}'],
             css: ['build/**/*.{css,css.map}']
+        },
+
+        //--Critical--//
+        ////Running this on the build file to inline critical css
+        critical: {
+            dist: {
+                options: {
+                    inline: true,
+                    base: './build',
+                    minify: true,
+                    width: 1300,
+                    height: 900
+                },
+                src: 'build/index.html',
+                dest: 'build/index.html'
+            }
         }
 
     });
@@ -148,6 +164,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-critical');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     grunt.registerTask('default', [
@@ -158,6 +175,7 @@ module.exports = function(grunt) {
         'sass',
         'postcss',
         'htmlmin',
+        'critical',
         'imagemin',
         'connect:build',
     ]);

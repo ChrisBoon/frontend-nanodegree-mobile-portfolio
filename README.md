@@ -1,73 +1,51 @@
-## Website Performance Optimization portfolio project
+# Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+## Instructions
 
-To get started, check out the repository, inspect the code,
+### To view hosted version GitHub:
+http://chrisboon.github.io/frontend-nanodegree-mobile-portfolio/build/
 
-### Getting started
+### Github repo:
+https://github.com/ChrisBoon/frontend-nanodegree-mobile-portfolio
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+### To view locally once downloaded:
+For minified, compressed, and optimized files view the 'build' folder.
+To see my working files view the 'app' folder.
 
-Some useful tips to help you get started:
+## Optimizing index.html
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+### Add grunt task to perform various optimizations:
+- remove unnecassary browser-prefixes (and add required ones) [PostCSS/Autoprefixer]
+- minify CSS (+ other optimizations) [PostCSS/CSSNano]
+- minify HTML [HTMLMin]
+- minify JS [uglify]
+- losslessly compress images [imagemin]
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
+### Further optimizations include:
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
+- Optimize images to serve resolution required
+- Make analytics js async
+- Removed link to web font - reduced size of site but at loss of Design control - would not do this in a production site without approval of Design team.
+- Inline Critical CSS*
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ngrok http 8080
-  ```
+*I'm torn on this. It was required to push my Pagespeed Mobile score from 87 to 94, but in my tests it didn't improve onload time. Needed to get 90+ to pass project but in general I'm not happy about improving test score to no real life benefit. I realise in a real production site there may be benefits to the concept (at least until HTTP 2.0) so still good to know how to do it. Also it's possible that some browsers/devices would see improvement and that I only didn't see it due to limited testing.
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+### Current Pagespeed score:
+Desktop: 96/100
+Mobile: 95/100
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+## Speeding up pizza.html
 
-####Part 2: Optimize Frames per Second in pizza.html
+### Frame Rate (scrolling)
+In order to make views/pizza.html render with a consistent frame-rate at 60fps when scrolling I did the following:
+- Removed repeated call to 'document.body.scrollTop' from within the loop.
+- Check viewport size and create the correct number of pizzas to fill the vewport. (Reruns on resize to make sure we don't wind up with too few/many pizzas if user's viewpor size changes)
+- use 'translate3D' instead of 'left' to move pizzas (note could become problematic if somehow a screen was big enough for 1000s of pizzas)
+- Store reference to "document.querySelectorAll('.mover')" result as variable - previously we looked it up on every scroll event.
+- Use requestanimationframe to update moving pizzas.
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
-
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
-
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
-
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
-
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
-
-### Sample Portfolios
-
-Feeling uninspired by the portfolio? Here's a list of cool portfolios I found after a few minutes of Googling.
-
-* <a href="http://www.reddit.com/r/webdev/comments/280qkr/would_anybody_like_to_post_their_portfolio_site/">A great discussion about portfolios on reddit</a>
-* <a href="http://ianlunn.co.uk/">http://ianlunn.co.uk/</a>
-* <a href="http://www.adhamdannaway.com/portfolio">http://www.adhamdannaway.com/portfolio</a>
-* <a href="http://www.timboelaars.nl/">http://www.timboelaars.nl/</a>
-* <a href="http://futoryan.prosite.com/">http://futoryan.prosite.com/</a>
-* <a href="http://playonpixels.prosite.com/21591/projects">http://playonpixels.prosite.com/21591/projects</a>
-* <a href="http://colintrenter.prosite.com/">http://colintrenter.prosite.com/</a>
-* <a href="http://calebmorris.prosite.com/">http://calebmorris.prosite.com/</a>
-* <a href="http://www.cullywright.com/">http://www.cullywright.com/</a>
-* <a href="http://yourjustlucky.com/">http://yourjustlucky.com/</a>
-* <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
-* <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
-* <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+## Computational Efficiency
+In order to make sure time to resize pizzas is less than 5 ms using the pizza size slider on the views/pizza.html page, I did the following:
+- Switched to using percentage widths. This allowed me to avoid querying the DOM at all.
+- Moved the logic for deciding on the size to make the pizza out of a loop. Previously it was getting calculated individually on each pizza but the result was always the same.
+These two improvements were enough to take resize down from approx. 175ms to <1ms on my test device.
