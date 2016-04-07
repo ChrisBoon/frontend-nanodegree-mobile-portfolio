@@ -12,6 +12,14 @@ https://github.com/ChrisBoon/frontend-nanodegree-mobile-portfolio
 For minified, compressed, and optimized files view the 'build' folder.
 To see my working files view the 'app' folder.
 
+## Build Process
+The Github reo actually includes the built files for the purposes of Udacity grading. However should you wish to download and run the build yourself you will need Grunt and node.js. If you don't have them installed you can find out more here:
+http://gruntjs.com/
+https://nodejs.org/en/
+
+Once you have installed grunt, use the command line to cd into the root directory and type 'grunt' to run the default build task.
+There is currently only a default 'build' task as the project didn't feel complex enough to warrant a separate 'dist' task.
+
 ## Optimizing index.html
 
 ### Add grunt task to perform various optimizations:
